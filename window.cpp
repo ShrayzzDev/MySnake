@@ -90,7 +90,7 @@ void Window::reactEvent(SDL_Rect & rectangle) {
 void Window::renderFond() const
 {
 	SDL_SetRenderDrawColor(m_renderer, 144, 238, 144, 255);
-	SDL_RenderClear(m_renderer);
+	SDL_RenderClear(m_renderer);  
 }
 
 void Window::clear(SDL_Rect & rectangle, int changeX, int changeY) const {
