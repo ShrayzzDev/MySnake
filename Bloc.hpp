@@ -11,5 +11,9 @@ class Block
 public:
 	Block(int x, int y, int largeur, int hauteur);
 	void renderBlock(Window & fenetreAct) const;
+	void setX(int chgmnt);
+	int getX();
+	void setY(int chgmnt);
+	int getY();
 };
 

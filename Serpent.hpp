@@ -3,8 +3,9 @@
 #include <list>
 #include <string>
 
-#include "window.h"
 #include "Bloc.hpp"
+
+class Window;
 
 class Serpent
 {
@@ -13,11 +14,10 @@ class Serpent
 	std::list<Block> m_serp;
 
 public:
-	Serpent(int taille = 4);
-	void renderUnBloc(Window& fenetreAct) const;
-	void renderSerp(Window & fenetreAct) const;
-	void Avancer();
-	void changerDirection();
-	void manger();
+	Serpent(const Window & fenetre, int taille = 4);
+	void renderSerp(Window * fenetreAct) const;
+	void Avancer(Window * fenetre);
+	void changerDirection(const std::string & dir);
+	//void manger();
 };
 

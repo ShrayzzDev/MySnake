@@ -3,6 +3,8 @@
 #include <string>
 #include <SDL.h>
 
+class Serpent;
+
 class Window {
 	std::string m_nom;
 	int m_largeur = 800;
@@ -17,9 +19,11 @@ public:
 	Window(const std::string& titre, int largeur, int hauteur);
 	int getHauteur() const;
 	int getLargeur() const;
+	SDL_Renderer* getRenderer() const;
 	bool init();
 	bool isClosed() const;
 	void reactEvent(SDL_Rect& rectangle);
+	void reactEvent(Serpent& serp);
 	void renderFond() const;
 	void clear(SDL_Rect& rectangle, int changeX, int changeY) const;
 	~Window();

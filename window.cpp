@@ -1,8 +1,10 @@
 #include <iostream>
-#include <SDL.h>
+//#include <SDL.h>
 #include <cmath>
 
 #include "window.h"
+#include "Serpent.hpp"
+#include "Bloc.hpp"
 
 using namespace std;
 
@@ -20,6 +22,11 @@ int Window::getHauteur() const
 int Window::getLargeur() const
 {
 	return m_largeur;
+}
+
+SDL_Renderer* Window::getRenderer() const
+{
+	return m_renderer;
 }
 
 bool Window::init()
@@ -53,6 +60,7 @@ void Window::reactEvent(SDL_Rect & rectangle) {
 		switch (event.type) {
 		case SDL_QUIT:
 			m_fermé = true;
+			break;
 
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym) {
@@ -81,6 +89,35 @@ void Window::reactEvent(SDL_Rect & rectangle) {
 				break;
 			}
 			}
+		default:
+			break;
+		}
+	}
+}
+
+void Window::reactEvent(Serpent& serp) {
+	SDL_Event event;
+	if (SDL_PollEvent(&event)) {
+		switch (event.type) {
+		case SDL_QUIT:
+			m_fermé = true;
+			break;
+
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym) {
+			case SDLK_UP:
+				serp.changerDirection("haut");
+				break;
+			case SDLK_DOWN:
+				serp.changerDirection("bas");
+				break;
+			case SDLK_LEFT:
+				serp.changerDirection("gauche");
+				break;
+			case SDLK_RIGHT:
+				serp.changerDirection("droite");
+				break;
+				}
 		default:
 			break;
 		}
