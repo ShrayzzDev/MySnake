@@ -103,6 +103,15 @@ void Window::reactEvent(Serpent& serp) {
 			m_fermé = true;
 			break;
 
+		case SDL_WINDOWEVENT:
+			switch (event.window.event) {
+			case SDL_WINDOWEVENT_MAXIMIZED: {
+				m_largeur = 1920;
+				m_hauteur = 1080;
+				serp.renderSerp(this);
+				break;
+			}
+		}
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym) {
 			case SDLK_UP:

@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\renau\source\repos\MySnake2\deps\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\renau\source\repos\MySnake2\deps\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>.\deps\include;C:\Users\flore\Documents\git\MySnake\deps\include;$(IncludePath)</IncludePath>
+    <LibraryPath>.\deps\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

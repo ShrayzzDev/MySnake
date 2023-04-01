@@ -18,6 +18,6 @@ public:
 	void renderSerp(Window * fenetreAct) const;
 	void Avancer(Window * fenetre);
 	void changerDirection(const std::string & dir);
-	//void manger();
+	void manger();
 };
 
