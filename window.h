@@ -22,9 +22,7 @@ public:
 	SDL_Renderer* getRenderer() const;
 	bool init();
 	bool isClosed() const;
-	void reactEvent(SDL_Rect& rectangle);
 	void reactEvent(Serpent& serp);
 	void renderFond() const;
-	void clear(SDL_Rect& rectangle, int changeX, int changeY) const;
 	~Window();
 };

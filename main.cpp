@@ -4,6 +4,7 @@
 #include <conio.h>
 #include <SDL.h>
 #include <ctime>
+#include <cstdlib>
 
 #include "window.h"
 #include "Serpent.hpp"
@@ -11,37 +12,30 @@
 
 using namespace std;
 
-void testBase(Window& fentre)
-{
-    SDL_Rect rectangle;
-    fentre.renderFond();
-    rectangle.w = 120;
-    rectangle.h = 80;
-    rectangle.x = (fentre.getLargeur() / 2) - (rectangle.w / 2);
-    rectangle.y = (fentre.getHauteur() / 2) - (rectangle.h / 2);
-    fentre.clear(rectangle, 0, 0);
-    while (!fentre.isClosed()) {
-        fentre.reactEvent(rectangle);
-    }
-}
-
 int main(int argc, char **argv)
 {
-    Window fentre("test", 800, 600);
-    Serpent serpi(fentre, 42);
+    Window fentre("test", 1600, 900);
+    Serpent serpi(fentre, 32);
+    Block Pomme(0,0,40,40,"pomme");
     serpi.renderSerp(&fentre);
-    //unsigned int i = 0;
+    Pomme.generateCoord(fentre, serpi);
+    Pomme.renderBlock(fentre);
+    SDL_RenderPresent(fentre.getRenderer());
     unsigned int temps = clock();
     while (!fentre.isClosed()){
-        while (temps%700 != 0) {
+        
+        while (temps%450 != 0) {
             fentre.reactEvent(serpi);
             temps = clock();
         }
+        fentre.renderFond();
         temps = clock();
         serpi.Avancer(&fentre);
+        serpi.collisionWithWall(fentre);
+        Pomme.etreMange(serpi, fentre);
+        serpi.renderSerp(&fentre);
+        Pomme.renderBlock(fentre);
+        SDL_RenderPresent(fentre.getRenderer());
     }
-    //testBase(fentre);
-    //char temp;
-    //temp = _getch();
     return 0;
 }

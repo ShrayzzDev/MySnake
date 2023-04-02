@@ -10,7 +10,7 @@
 using namespace std;
 
 Serpent::Serpent( const Window & fenetre, int taille)
-	:m_taille{ taille }, m_direction{ "haut" }, m_serp{}
+	:m_taille{ taille }, m_direction{ "haut" }, m_serp{}, m_buffer{ 0,0,0,0,"serpent"}
 {
 	int x_init = (fenetre.getLargeur() / 2) + taille/2;
 	int y_init = (fenetre.getHauteur() / 2) + taille/2;
@@ -22,44 +22,33 @@ Serpent::Serpent( const Window & fenetre, int taille)
 
 void Serpent::renderSerp(Window * fenetreAct) const
 {
-	fenetreAct->renderFond();
-
 	for (const Block & blockAct : m_serp)
 		blockAct.renderBlock(*fenetreAct);
-
-	SDL_RenderPresent(fenetreAct->getRenderer());
-
 }
 
 void Serpent::Avancer(Window * fenetre)
 {
-	/*int i = 0;
-	list<Block>::reverse_iterator it = m_serp.rbegin();
-	for (it; *it != m_serp.front() || i == m_serp.size(); ++it, ++i) {
-		it->setX(next(it,1)->getX());
-		it->setY(next(it,1)->getY());
-		cout << "j'avance un bloc de un point" << endl;
-	}*/
 
 	m_serp.push_front(m_serp.front());
-
+	m_buffer = m_serp.back();
 	m_serp.pop_back();
 
 	if (m_direction == "haut") {
-		m_serp.front().setY(-40);
+		m_serp.front().setY(-20);
 	}
 
 	if (m_direction == "bas") {
-		m_serp.front().setY(40);
+		m_serp.front().setY(20);
 	}
 
 	if (m_direction == "droite") {
-		m_serp.front().setX(40);
+		m_serp.front().setX(20);
 	}
 
 	if (m_direction == "gauche") {
-		m_serp.front().setX(-40);
+		m_serp.front().setX(-20);
 	}
+	collisionWithHimself();
 	renderSerp(fenetre);
 }
 
@@ -90,5 +79,32 @@ void Serpent::changerDirection(const string& dir)
 
 void Serpent::manger()
 {
-	m_serp.push_back(m_serp.back());
+	m_serp.push_back(m_buffer);
+}
+
+void Serpent::collisionWithWall(const Window& fenetre) const
+{
+	if (m_serp.front().getX() >= fenetre.getLargeur() || m_serp.front().getX() <= 0 || m_serp.front().getY() >= fenetre.getHauteur() || m_serp.front().getY() <= 0) {
+			exit(1);
+	}
+}
+
+void Serpent::collisionWithHimself() const
+{
+	list<Block>::const_iterator it = m_serp.cbegin();
+	for (++it; it != m_serp.end(); ++it)
+	{
+		if (m_serp.front().getX() == it->getX() && m_serp.front().getY() == it->getY())
+			exit(2);
+	}
+}
+
+int Serpent::getX() const
+{
+	return m_serp.front().getX();
+}
+
+int Serpent::getY() const
+{
+	return m_serp.front().getY();
 }
