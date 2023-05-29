@@ -5,6 +5,7 @@
 #include "window.h"
 #include "Serpent.hpp"
 #include "Bloc.hpp"
+#include "direction.hpp"
 
 using namespace std;
 
@@ -74,16 +75,16 @@ void Window::reactEvent(Serpent& serp) {
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym) {
 			case SDLK_UP:
-				serp.changerDirection("haut");
+				serp.changerDirection(Haut);
 				break;
 			case SDLK_DOWN:
-				serp.changerDirection("bas");
+				serp.changerDirection(Bas);
 				break;
 			case SDLK_LEFT:
-				serp.changerDirection("gauche");
+				serp.changerDirection(Gauche);
 				break;
 			case SDLK_RIGHT:
-				serp.changerDirection("droite");
+				serp.changerDirection(Droite);
 				break;
 				}
 		default:

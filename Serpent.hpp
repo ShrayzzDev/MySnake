@@ -4,21 +4,22 @@
 #include <string>
 
 #include "Bloc.hpp"
+#include "direction.hpp"
 
 class Window;
 
 class Serpent
 {
-	int m_taille;
-	std::string m_direction;
+	Direction m_direction;
 	std::list<Block> m_serp;
+	Block m_buffer_1;
 	Block m_buffer;
 
 public:
 	Serpent(const Window & fenetre, int taille = 4);
 	void renderSerp(Window * fenetreAct) const;
 	void Avancer(Window * fenetre);
-	void changerDirection(const std::string & dir);
+	void changerDirection(Direction dir);
 	void collisionWithWall(const Window & fenetre) const;
 	void collisionWithHimself() const;
 	int getX() const;

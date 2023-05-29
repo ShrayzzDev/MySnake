@@ -6,14 +6,15 @@
 #include "Serpent.hpp"
 #include "window.h"
 #include "Bloc.hpp"
+#include "direction.hpp"
 
 using namespace std;
 
 Serpent::Serpent( const Window & fenetre, int taille)
-	:m_taille{ taille }, m_direction{ "haut" }, m_serp{}, m_buffer{ 0,0,0,0,"serpent"}
+	: m_direction{ Haut }, m_serp{}, m_buffer{ 0,0,0,0,"serpent"}, m_buffer_1{ 0,0,0,0,"serpent" }
 {
-	int x_init = (fenetre.getLargeur() / 2) + taille/2;
-	int y_init = (fenetre.getHauteur() / 2) + taille/2;
+	int x_init = (fenetre.getLargeur() / 2);
+	int y_init = (fenetre.getHauteur() / 2);
 	for (int rep = 0; rep < taille; ++rep) {
 		Block temp(x_init, y_init + (rep * 40), 40, 40, "serpent");
 		m_serp.push_back(temp);
@@ -30,56 +31,46 @@ void Serpent::Avancer(Window * fenetre)
 {
 
 	m_serp.push_front(m_serp.front());
+	m_buffer_1 = m_buffer;
 	m_buffer = m_serp.back();
 	m_serp.pop_back();
 
-	if (m_direction == "haut") {
-		m_serp.front().setY(-20);
-	}
+	switch (m_direction)
+	{
+		case Haut:
+			m_serp.front().setY(-20);
+			break;
 
-	if (m_direction == "bas") {
-		m_serp.front().setY(20);
-	}
+		case Bas:
+			m_serp.front().setY(20);
+			break;
 
-	if (m_direction == "droite") {
-		m_serp.front().setX(20);
-	}
+		case Droite:
+			m_serp.front().setX(20);
+			break;
 
-	if (m_direction == "gauche") {
-		m_serp.front().setX(-20);
+		case Gauche:
+			m_serp.front().setX(-20);
+			break;
+
 	}
 	collisionWithHimself();
 	renderSerp(fenetre);
 }
 
-void Serpent::changerDirection(const string& dir)
+void Serpent::changerDirection(Direction dir)
 {
-	if (dir != "haut" && dir != "bas" && dir != "droite" && dir != "gauche") {
-		cerr << "Erreur: direction incorrecte" << endl;
+
+	if ((m_direction == Haut && dir == Bas) || (m_direction == Bas && dir == Haut) || (m_direction == Droite && dir == Gauche) || (m_direction == Gauche && dir == Droite) ) {
 		return;
 	}
 
-	if (m_direction == "haut" && dir == "bas") {
-		return;
-	}
-
-	if (m_direction == "bas" && dir == "haut") {
-		return;
-	}
-
-	if (m_direction == "droite" && dir == "gauche") {
-		return;
-	}
-
-	if (m_direction == "gauche" && dir == "droite") {
-		return;
-	}
 	m_direction = dir;
 }
 
 void Serpent::manger()
 {
-	m_serp.push_back(m_buffer);
+	m_serp.push_back(m_buffer_1);
 }
 
 void Serpent::collisionWithWall(const Window& fenetre) const

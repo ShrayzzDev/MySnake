@@ -15,7 +15,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
     Window fentre("test", 1600, 900);
-    Serpent serpi(fentre, 32);
+    Serpent serpi(fentre, 16);
     Block Pomme(0,0,40,40,"pomme");
     serpi.renderSerp(&fentre);
     Pomme.generateCoord(fentre, serpi);
@@ -28,6 +28,7 @@ int main(int argc, char **argv)
             fentre.reactEvent(serpi);
             temps = clock();
         }
+        cout << serpi.getX() << " " << serpi.getY() << endl;;
         fentre.renderFond();
         temps = clock();
         serpi.Avancer(&fentre);
